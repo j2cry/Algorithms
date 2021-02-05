@@ -5,8 +5,8 @@
 source = [3, 7, 4, 9, 12, 35, 22, 76, 13, 88, 514]
 result = [source.index(elem) for elem in source if elem % 2 == 0]
 
-# for index in range(len(source)):
-#     if source[index] % 2 == 0:
+# for index, num in enumerate(source):
+#     if num % 2 == 0:
 #         result.append(index)
 
 print(result)
