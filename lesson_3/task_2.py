@@ -3,7 +3,7 @@
 # начинается с нуля), т. к. именно в этих позициях первого массива стоят четные числа.
 
 source = [3, 7, 4, 9, 12, 35, 22, 76, 13, 88, 514]
-result = [source.index(elem) for elem in source if elem % 2 == 0]
+result = [index for index, elem in enumerate(source) if elem % 2 == 0]
 
 # for index, num in enumerate(source):
 #     if num % 2 == 0:
