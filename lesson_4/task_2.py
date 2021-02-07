@@ -16,7 +16,7 @@ from task_1 import test_algorithm
 import cProfile
 from timeit import timeit
 
-target = 100
+target = 1000000
 
 
 def algorithm_1():
@@ -48,6 +48,27 @@ def algorithm_2():     # iterating through divisors
 
 
 def algorithm_3():
+    primes = [3]
+
+    for number in count(3, 2):     # start from 3, cause 2 is already known as prime number
+        # check whether the current number is divisible by prime numbers < sqrt(number)
+        sq_num = sqrt(number)
+        is_prime = False
+        for prime in primes:
+            if prime > sq_num:
+                is_prime = True
+                break       # нет смысла искать дальше
+            if number % prime == 0:
+                break       # divisor found
+        if is_prime:
+            primes.append(number)
+            if len(primes) >= target:
+                break
+    primes = [2, *primes]
+    return f'The {target}-th prime number is {primes[-1]}'
+
+
+def algorithm_3_old():
     primes = [2]
 
     for number in count(3):     # start from 3, cause 2 is already known as prime number
@@ -68,15 +89,18 @@ def algorithm_3():
 
 
 if __name__ == '__main__':
-    print(algorithm_1())
-    print(algorithm_2())
+    # print(algorithm_1())
+    # print(algorithm_2())
     print(algorithm_3())
-    test_algorithm(algorithm_1, algorithm_2, algorithm_3, loops=10)
+    # test_algorithm(algorithm_1, algorithm_2, algorithm_3, loops=5)
+    test_algorithm(algorithm_3_old, algorithm_3, loops=5)
 
-    print('----- Algorithm 1 -----')
-    cProfile.run('algorithm_1()')
-    print('----- Algorithm 2 -----')
-    cProfile.run('algorithm_2()')
+    # print('----- Algorithm 1 -----')
+    # cProfile.run('algorithm_1()')
+    # print('----- Algorithm 2 -----')
+    # cProfile.run('algorithm_2()')
+    print('----- Algorithm 3 Old -----')
+    cProfile.run('algorithm_3_old()')
     print('----- Algorithm 3 -----')
     cProfile.run('algorithm_3()')
 
@@ -86,6 +110,7 @@ if __name__ == '__main__':
     #     print(timeit(algorithm_1, number=lp) / lp)
 
 # OUTPUT:
+# The 15000-th prime number is 163841
 # Algorithm 1, loops = 10:
 #     minimal time: 4.4706667000000095
 #     maximal time: 4.826662400000004
@@ -148,3 +173,50 @@ if __name__ == '__main__':
 #    163839    0.026    0.000    0.026    0.000 {built-in method math.sqrt}
 #     14999    0.001    0.000    0.001    0.000 {method 'append' of 'list' objects}
 #         1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+
+# Дополнение по вариантам алгоритма 3:
+# The 1000000-th prime number is 15485863
+# Algorithm 1, loops = 5:
+#     minimal time: 57.32546309999998
+#     maximal time: 64.09637230000001
+#     average time: 59.64487260000001
+#     median time: 58.459247300000015
+# ------
+# Algorithm 2, loops = 5:
+#     minimal time: 57.00206159999999
+#     maximal time: 65.06095400000004
+#     average time: 59.33923560000001
+#     median time: 57.76897889999998
+# ------
+# The best algorithm is 2 with avg. time 59.33923560000001
+#    It is 1.0051506730228252 times faster than algorithm 1
+# ----- Algorithm 3 Old -----
+#          17485863 function calls in 61.463 seconds
+#
+#    Ordered by: standard name
+#
+#    ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+#         1    0.010    0.010   61.462   61.462 <string>:1(<module>)
+#         1   58.606   58.606   61.452   61.452 task_2.py:71(algorithm_3_old)
+#         1    0.000    0.000   61.463   61.463 {built-in method builtins.exec}
+#    999999    0.113    0.000    0.113    0.000 {built-in method builtins.len}
+#  15485861    2.581    0.000    2.581    0.000 {built-in method math.sqrt}
+#    999999    0.152    0.000    0.152    0.000 {method 'append' of 'list' objects}
+#         1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+#
+#
+# ----- Algorithm 3 -----
+#          9742933 function calls in 60.276 seconds
+#
+#    Ordered by: standard name
+#
+#    ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+#         1    0.012    0.012   60.276   60.276 <string>:1(<module>)
+#         1   58.642   58.642   60.264   60.264 task_2.py:50(algorithm_3)
+#         1    0.000    0.000   60.276   60.276 {built-in method builtins.exec}
+#    999999    0.120    0.000    0.120    0.000 {built-in method builtins.len}
+#   7742931    1.351    0.000    1.351    0.000 {built-in method math.sqrt}
+#    999999    0.152    0.000    0.152    0.000 {method 'append' of 'list' objects}
+#         1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+
+# любопытно, что при очень больших искомых значениях, разница во времени нивелируется
