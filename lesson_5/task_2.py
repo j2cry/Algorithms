@@ -1,3 +1,6 @@
+# Написать программу сложения и умножения двух шестнадцатеричных чисел. При этом каждое число представляется как
+# массив, элементы которого — цифры числа.
+
 from string import ascii_uppercase, digits
 from collections import ChainMap, deque
 from itertools import zip_longest
@@ -6,7 +9,7 @@ from functools import partial, reduce
 from statistics import median
 
 base = 16
-assert 0 < base < len(digits+ascii_uppercase) + 1
+assert 1 < base < len(digits+ascii_uppercase) + 1
 
 # generate correspondence table
 digits_dict = {char: index for index, char in enumerate(digits)}
