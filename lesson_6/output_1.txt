@@ -1,0 +1,219 @@
+# 3.9.0 (tags/v3.9.0:9cf6752, Oct  5 2020, 15:34:40) [MSC v.1927 64 bit (AMD64)] win32
+# Filename: E:\Python projects\Algorithms\lesson_6\task_1.py
+#
+# Line #    Mem usage    Increment  Occurences   Line Contents
+# ============================================================
+#     13     19.8 MiB     19.8 MiB           1   @profile
+#     14                                         def algorithm_1(target):
+#     15     19.8 MiB      0.0 MiB           1       primes = [2]
+#     16     19.9 MiB      0.0 MiB           1       rng = int(1.5 * target * log(target))
+#     17     19.9 MiB      0.0 MiB        3959       for number in range(3, rng, 2):
+#     18     19.9 MiB      0.0 MiB      513424           for prime in primes:    # check whether the current number is divisible by all prime numbers before it
+#     19     19.9 MiB      0.0 MiB      512425               if number % prime == 0:
+#     20     19.9 MiB      0.0 MiB        2960                   break       # divisor found
+#     21                                                 else:
+#     22     19.9 MiB      0.0 MiB         999               primes.append(number)
+#     23     19.9 MiB      0.0 MiB         999               if len(primes) >= target:
+#     24     19.9 MiB      0.0 MiB           1                   break
+#     25     19.9 MiB      0.0 MiB           1       return f'The {target}-th prime number is {primes[-1]}'
+#
+#
+# ALG 1: The 1000-th prime number is 7919
+# Filename: E:\Python projects\Algorithms\lesson_6\task_1.py
+#
+# Line #    Mem usage    Increment  Occurences   Line Contents
+# ============================================================
+#     28     19.9 MiB     19.9 MiB           1   @profile
+#     29                                         def algorithm_2(target):     # iterating through divisors
+#     30     19.9 MiB      0.0 MiB           1       primes = [2]
+#     31     19.9 MiB    -30.2 MiB        7917       for number in count(3):
+#     32     19.9 MiB -33350.6 MiB     3712626           for divisor in range(2, number):
+#     33     19.9 MiB -28592.6 MiB     3711627               if number % divisor == 0:       # divisor found => number is not prime
+#     34     19.9 MiB    -37.7 MiB        6918                   break
+#     35                                                 else:
+#     36     19.9 MiB     -4.0 MiB         999               primes.append(number)
+#     37     19.9 MiB     -3.3 MiB         999               if len(primes) == target:        # break if target number was found
+#     38     19.9 MiB     -0.0 MiB           1                   break
+#     39     19.9 MiB      0.0 MiB           1       return f'The {target}-th prime number is {primes[-1]}'
+#
+#
+# ALG 2: The 1000-th prime number is 7919
+# Filename: E:\Python projects\Algorithms\lesson_6\task_1.py
+#
+# Line #    Mem usage    Increment  Occurences   Line Contents
+# ============================================================
+#     42     19.9 MiB     19.9 MiB           1   @profile
+#     43                                         def algorithm_3(target):
+#     44     19.9 MiB      0.0 MiB           1       primes = [3]
+#     45     19.9 MiB      0.0 MiB        3959       for number in count(3, 2):     # start from 3, cause 2 is already known as prime number
+#     46                                                 # check whether the current number is divisible by prime numbers < sqrt(number)
+#     47     19.9 MiB      0.0 MiB        3959           sq_num = sqrt(number)
+#     48     19.9 MiB      0.0 MiB        3959           is_prime = False
+#     49     19.9 MiB      0.0 MiB       28769           for prime in primes:
+#     50     19.9 MiB      0.0 MiB       28769               if prime > sq_num:
+#     51     19.9 MiB      0.0 MiB         999                   is_prime = True
+#     52     19.9 MiB      0.0 MiB         999                   break       # нет смысла искать дальше
+#     53     19.9 MiB      0.0 MiB       27770               if number % prime == 0:
+#     54     19.9 MiB      0.0 MiB        2960                   break       # divisor found
+#     55     19.9 MiB      0.0 MiB        3959           if is_prime:
+#     56     19.9 MiB      0.0 MiB         999               primes.append(number)
+#     57     19.9 MiB      0.0 MiB         999               if len(primes) >= target:
+#     58     19.9 MiB      0.0 MiB           1                   break
+#     59     19.9 MiB      0.0 MiB           1       primes = [2, *primes]
+#     60     19.9 MiB      0.0 MiB           1       return f'The {target}-th prime number is {primes[-1]}'
+#
+#
+# ALG 3: The 1000-th prime number is 7919
+# Filename: E:\Python projects\Algorithms\lesson_6\task_1.py
+#
+# Line #    Mem usage    Increment  Occurences   Line Contents
+# ============================================================
+#     63     19.9 MiB     19.9 MiB           1   @profile
+#     64                                         def algorithm_3_lim(target):
+#     65     19.9 MiB      0.0 MiB           1       primes = [3]
+#     66     19.9 MiB      0.0 MiB           1       rng = int(1.5 * target * log(target))
+#     67     19.9 MiB      0.0 MiB        3959       for number in range(3, rng, 2):     # start from 3, cause 2 is already known as prime number
+#     68                                                 # check whether the current number is divisible by prime numbers < sqrt(number)
+#     69     19.9 MiB      0.0 MiB        3959           sq_num = sqrt(number)
+#     70     19.9 MiB      0.0 MiB        3959           is_prime = False
+#     71     19.9 MiB      0.0 MiB       28769           for prime in primes:
+#     72     19.9 MiB      0.0 MiB       28769               if prime > sq_num:
+#     73     19.9 MiB      0.0 MiB         999                   is_prime = True
+#     74     19.9 MiB      0.0 MiB         999                   break       # нет смысла искать дальше
+#     75     19.9 MiB      0.0 MiB       27770               if number % prime == 0:
+#     76     19.9 MiB      0.0 MiB        2960                   break       # divisor found
+#     77     19.9 MiB      0.0 MiB        3959           if is_prime:
+#     78     19.9 MiB      0.0 MiB         999               primes.append(number)
+#     79     19.9 MiB      0.0 MiB         999               if len(primes) >= target:
+#     80     19.9 MiB      0.0 MiB           1                   break
+#     81     19.9 MiB      0.0 MiB           1       primes = [2, *primes]
+#     82     19.9 MiB      0.0 MiB           1       return f'The {target}-th prime number is {primes[-1]}'
+#
+#
+# ALG 3 lim: The 1000-th prime number is 7919
+# --------------------------------------------------
+
+
+
+
+
+# Профилирование algorithm_3 и algorithm_3_lim на высоких значениях target
+# другие алгоритмы не рассматриваются ввиду их очень большого времени работы
+
+3.9.0 (tags/v3.9.0:9cf6752, Oct  5 2020, 15:34:40) [MSC v.1927 64 bit (AMD64)] win32
+Filename: E:\Python projects\Algorithms\lesson_6\task_1.py
+
+Line #    Mem usage    Increment  Occurences   Line Contents
+============================================================
+    42     19.9 MiB     19.9 MiB           1   @profile
+    43                                         def algorithm_3(target):
+    44     19.9 MiB      0.0 MiB           1       primes = [3]
+    45     22.5 MiB    -93.8 MiB      305976       for number in count(3, 2):     # start from 3, cause 2 is already known as prime number
+    46                                                 # check whether the current number is divisible by prime numbers < sqrt(number)
+    47     22.5 MiB    -92.3 MiB      305976           sq_num = sqrt(number)
+    48     22.5 MiB    -93.8 MiB      305976           is_prime = False
+    49     22.5 MiB  -2852.9 MiB     7043560           for prime in primes:
+    50     22.5 MiB  -2477.5 MiB     7043560               if prime > sq_num:
+    51     22.5 MiB    -18.3 MiB       49999                   is_prime = True
+    52     22.5 MiB    -15.2 MiB       49999                   break       # нет смысла искать дальше
+    53     22.5 MiB  -2459.2 MiB     6993561               if number % prime == 0:
+    54     22.5 MiB   -110.0 MiB      255977                   break       # divisor found
+    55     22.5 MiB    -93.8 MiB      305976           if is_prime:
+    56     22.5 MiB    -14.1 MiB       49999               primes.append(number)
+    57     22.5 MiB    -15.2 MiB       49999               if len(primes) >= target:
+    58     22.5 MiB      0.0 MiB           1                   break
+    59     21.8 MiB     -0.7 MiB           1       primes = [2, *primes]
+    60     21.8 MiB      0.0 MiB           1       return f'The {target}-th prime number is {primes[-1]}'
+
+
+ALG 3: The 50000-th prime number is 611953
+Filename: E:\Python projects\Algorithms\lesson_6\task_1.py
+
+Line #    Mem usage    Increment  Occurences   Line Contents
+============================================================
+    63     20.2 MiB     20.2 MiB           1   @profile
+    64                                         def algorithm_3_lim(target):
+    65     20.2 MiB      0.0 MiB           1       primes = [3]
+    66     20.2 MiB      0.0 MiB           1       rng = int(1.5 * target * log(target))
+    67     22.6 MiB      0.0 MiB      305976       for number in range(3, rng, 2):     # start from 3, cause 2 is already known as prime number
+    68                                                 # check whether the current number is divisible by prime numbers < sqrt(number)
+    69     22.6 MiB      1.2 MiB      305976           sq_num = sqrt(number)
+    70     22.6 MiB      0.0 MiB      305976           is_prime = False
+    71     22.6 MiB      0.0 MiB     7043560           for prime in primes:
+    72     22.6 MiB      0.0 MiB     7043560               if prime > sq_num:
+    73     22.6 MiB      0.0 MiB       49999                   is_prime = True
+    74     22.6 MiB      0.0 MiB       49999                   break       # нет смысла искать дальше
+    75     22.6 MiB      0.0 MiB     6993561               if number % prime == 0:
+    76     22.6 MiB      0.0 MiB      255977                   break       # divisor found
+    77     22.6 MiB      0.0 MiB      305976           if is_prime:
+    78     22.6 MiB      1.1 MiB       49999               primes.append(number)
+    79     22.6 MiB      0.0 MiB       49999               if len(primes) >= target:
+    80     22.6 MiB      0.0 MiB           1                   break
+    81     22.9 MiB      0.4 MiB           1       primes = [2, *primes]
+    82     22.9 MiB      0.0 MiB           1       return f'The {target}-th prime number is {primes[-1]}'
+
+
+ALG 3 lim: The 50000-th prime number is 611953
+--------------------------------------------------
+
+
+
+
+Number 7 occurs 3 times in the sequence
+Filename: E:\Python projects\Algorithms\lesson_6\task_1.py
+
+Line #    Mem usage    Increment  Occurences   Line Contents
+============================================================
+    88     20.0 MiB     20.0 MiB           1   @profile
+    89                                         def additional_1(source):
+    90     20.0 MiB      0.0 MiB           1       max_counter = 1
+    91     20.0 MiB      0.0 MiB           1       number = 0
+    92     20.0 MiB      0.0 MiB          24       for index in range(len(source) - 1):
+    93     20.0 MiB      0.0 MiB          23           counter = 1
+    94     20.0 MiB      0.0 MiB         299           for compare_index in range(index + 1, len(source)):
+    95     20.0 MiB      0.0 MiB         276               counter += bool(source[index] == source[compare_index])
+    96     20.0 MiB      0.0 MiB          23           if max_counter < counter:
+    97     20.0 MiB      0.0 MiB           2               max_counter = counter
+    98     20.0 MiB      0.0 MiB           2               number = source[index]
+    99     20.0 MiB      0.0 MiB           1       print(f'Number {number} occurs {max_counter} times in the sequence')
+
+
+Number 7 occurs 3 times in the sequence
+Filename: E:\Python projects\Algorithms\lesson_6\task_1.py
+
+Line #    Mem usage    Increment  Occurences   Line Contents
+============================================================
+   103     20.0 MiB     20.0 MiB           1   @profile
+   104                                         def additional_2(source):
+   105     20.0 MiB      0.0 MiB           1       max_counter = 1
+   106     20.0 MiB      0.0 MiB           1       number = 0
+   107     20.0 MiB      0.0 MiB           1       counter = {}
+   108     20.0 MiB      0.0 MiB          25       for num in source:
+   109     20.0 MiB      0.0 MiB          24           if counter.get(num):
+   110     20.0 MiB      0.0 MiB           6               counter[num] += 1
+   111                                                 else:
+   112     20.0 MiB      0.0 MiB          18               counter.update({num: 1})
+   113
+   114     20.0 MiB      0.0 MiB          19       for num, cnt in counter.items():
+   115     20.0 MiB      0.0 MiB          18           if max_counter < cnt:
+   116     20.0 MiB      0.0 MiB           2               max_counter = cnt
+   117     20.0 MiB      0.0 MiB           2               number = num
+   118     20.0 MiB      0.0 MiB           1       print(f'Number {number} occurs {max_counter} times in the sequence')
+
+
+Two smallest values: -80, -19
+Filename: E:\Python projects\Algorithms\lesson_6\task_1.py
+
+Line #    Mem usage    Increment  Occurences   Line Contents
+============================================================
+   121     20.0 MiB     20.0 MiB           1   @profile
+   122                                         def les_3_t_7(source: list):
+   123     20.0 MiB      0.0 MiB           1       first_min, second_min = source[0], source[0]
+   124     20.0 MiB      0.0 MiB          25       for index in range(len(source)):
+   125     20.0 MiB      0.0 MiB          24           if source[index] <= first_min:
+   126     20.0 MiB      0.0 MiB           3               second_min = first_min
+   127     20.0 MiB      0.0 MiB           3               first_min = source[index]
+   128     20.0 MiB      0.0 MiB           3               continue
+   129     20.0 MiB      0.0 MiB          21           if source[index] < second_min:
+   130     20.0 MiB      0.0 MiB           2               second_min = source[index]
+   131     20.0 MiB      0.0 MiB           1       print(f'Two smallest values: {first_min}, {second_min}')
