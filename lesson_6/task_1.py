@@ -9,6 +9,7 @@ from itertools import count
 from math import sqrt, log
 import sys
 from memory_profiler import profile
+import tracemalloc
 
 
 @profile
@@ -135,21 +136,57 @@ def les_3_t_7(source: list):
 if __name__ == '__main__':
     print(sys.version, sys.platform)
     n = 500
-    print('ALG 1:', algorithm_1(n))
-    print('ALG 2:', algorithm_2(n))
-    print('ALG 3:', algorithm_3(n))
-    print('ALG 3 lim:', algorithm_3_lim(n))
+
+    tracemalloc.start()
+    print('-' * 25, 'ALGORITHM 1', '-' * 25)
+    print(algorithm_1(n))
+    memo = tracemalloc.get_traced_memory()
+    print(f'ALG1 MEMORY> current: {memo[0]}, Peak {memo[1]}')
+
+    print('-' * 25, 'ALGORITHM 2', '-' * 25)
+    tracemalloc.clear_traces()
+    print(algorithm_2(n))
+    memo = tracemalloc.get_traced_memory()
+    print(f'ALG2 MEMORY> current: {memo[0]}, Peak {memo[1]}')
+
+    print('-' * 25, 'ALGORITHM 3', '-' * 25)
+    tracemalloc.clear_traces()
+    print(algorithm_3(n))
+    memo = tracemalloc.get_traced_memory()
+    print(f'ALG3 MEMORY> current: {memo[0]}, Peak {memo[1]}')
+
+    print('-' * 25, 'ALGORITHM 3 LIM', '-' * 25)
+    tracemalloc.clear_traces()
+    print(algorithm_3_lim(n))
+    memo = tracemalloc.get_traced_memory()
+    print(f'ALG3 LIM MEMORY> current: {memo[0]}, Peak {memo[1]}')
+
     print('-' * 50)
 
     data = [10, 15, 41, 3, -80, -13, 17, 8, 3, -6, 1, 11, 15, -7, -3, -19, 10, 7, 93, 11, 7, 14, 22, 7]
-    additional_1(data)
-    additional_2(data)
-    les_3_t_7(data)
 
-# Выводы:
+    tracemalloc.clear_traces()
+    additional_1(data)
+    memo = tracemalloc.get_traced_memory()
+    print(f'ADD1 MEMORY> current: {memo[0]}, Peak {memo[1]}')
+
+    tracemalloc.clear_traces()
+    additional_2(data)
+    memo = tracemalloc.get_traced_memory()
+    print(f'ADD2 MEMORY> current: {memo[0]}, Peak {memo[1]}')
+
+    tracemalloc.clear_traces()
+    les_3_t_7(data)
+    memo = tracemalloc.get_traced_memory()
+    print(f'L3T7 MEMORY> current: {memo[0]}, Peak {memo[1]}')
+
+    tracemalloc.stop()
+
+# Выводы по memory_profiler:
 # 0) под все объекты скрипта выделено примерно 20 МиБ
-# 1) При малых значениях target все алгоритмы равноценны
+# 1) При малых значениях target все алгоритмы равноценны, при увеличении target начинает чудить алгоритм 2
 # 2) при высоких значениях target алгоритм 3 занимает памяти как будто бы чуть меньше и освобождает её раньше
 # 3) алгоритмы первых трех уроков неинтересно рассматривать с точки зрения использования памяти
-#       в виду отсутствия динамики
+#       в виду отсутствия динамики. Но из вариантов задания 4 урока 3 предпочтительнее вариант 1 (алгоритм additional_1)
+#       ибо он есть меньше памяти на максимуме
 
