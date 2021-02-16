@@ -134,52 +134,27 @@ def les_3_t_7(source: list):
 
 
 if __name__ == '__main__':
-    print(sys.version, sys.platform)
-    n = 500
+    def analyse(title, func, *args):
+        print('-' * 25, title, '-' * 25)
+        tracemalloc.clear_traces()
+        print(func(*args))
+        mem_current, mem_peak = tracemalloc.get_traced_memory()
+        print(f'{title}> current: {mem_current}, peak {mem_peak}')
 
-    tracemalloc.start()
-    print('-' * 25, 'ALGORITHM 1', '-' * 25)
-    print(algorithm_1(n))
-    memo = tracemalloc.get_traced_memory()
-    print(f'ALG1 MEMORY> current: {memo[0]}, Peak {memo[1]}')
-
-    print('-' * 25, 'ALGORITHM 2', '-' * 25)
-    tracemalloc.clear_traces()
-    print(algorithm_2(n))
-    memo = tracemalloc.get_traced_memory()
-    print(f'ALG2 MEMORY> current: {memo[0]}, Peak {memo[1]}')
-
-    print('-' * 25, 'ALGORITHM 3', '-' * 25)
-    tracemalloc.clear_traces()
-    print(algorithm_3(n))
-    memo = tracemalloc.get_traced_memory()
-    print(f'ALG3 MEMORY> current: {memo[0]}, Peak {memo[1]}')
-
-    print('-' * 25, 'ALGORITHM 3 LIM', '-' * 25)
-    tracemalloc.clear_traces()
-    print(algorithm_3_lim(n))
-    memo = tracemalloc.get_traced_memory()
-    print(f'ALG3 LIM MEMORY> current: {memo[0]}, Peak {memo[1]}')
-
-    print('-' * 50)
 
     data = [10, 15, 41, 3, -80, -13, 17, 8, 3, -6, 1, 11, 15, -7, -3, -19, 10, 7, 93, 11, 7, 14, 22, 7]
+    n = 500
 
-    tracemalloc.clear_traces()
-    additional_1(data)
-    memo = tracemalloc.get_traced_memory()
-    print(f'ADD1 MEMORY> current: {memo[0]}, Peak {memo[1]}')
+    print(sys.version, sys.platform)
+    tracemalloc.start()
+    analyse('ALGORITHM 1', algorithm_1, n)
+    analyse('ALGORITHM 2', algorithm_2, n)
+    analyse('ALGORITHM 3', algorithm_3, n)
+    analyse('ALGORITHM 3 LIM', algorithm_3_lim, n)
 
-    tracemalloc.clear_traces()
-    additional_2(data)
-    memo = tracemalloc.get_traced_memory()
-    print(f'ADD2 MEMORY> current: {memo[0]}, Peak {memo[1]}')
-
-    tracemalloc.clear_traces()
-    les_3_t_7(data)
-    memo = tracemalloc.get_traced_memory()
-    print(f'L3T7 MEMORY> current: {memo[0]}, Peak {memo[1]}')
-
+    analyse('ADD1', additional_1, data)
+    analyse('ADD2', additional_2, data)
+    analyse('L3T7', les_3_t_7, data)
     tracemalloc.stop()
 
 # Выводы по memory_profiler:
