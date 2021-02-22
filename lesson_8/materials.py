@@ -147,7 +147,7 @@ class Graph:
             finish = parents[finish]
         return weight
 
-    def breadth_first_search(self, start, finish):
+    def first_search(self, start, finish, depth_search=False):
         """ Поиск кратчайшего пути из А в Б """
         deq = deque([start])
         visited = {start, }
@@ -160,29 +160,33 @@ class Graph:
             for _node, _weight in enumerate(self.get_node(current)):
                 if _weight and _node not in visited:
                     visited.add(_node)
-                    deq.appendleft(_node)
+                    if depth_search:
+                        deq.append(_node)
+                    else:
+                        deq.appendleft(_node)
                     parent[_node] = current
         else:
             return None
         return self.__get_way(parent, finish), self.__get_way_weight(parent, finish)
 
-    def depth_first_search(self, start, finish):
-        deq = deque([start])
-        visited = {start, }
-        parent = [None for _ in range(self.nodes)]
-        while len(deq) > 0:
-            current = deq.pop()
-            if current == finish:
-                break
-            # ищем все пути из текущей вершины и приоритетно ставим в очередь, если они не были просмотрены
-            for _node, _weight in enumerate(self.get_node(current)):
-                if _weight and _node not in visited:
-                    visited.add(_node)
-                    deq.append(_node)
-                    parent[_node] = current
-        else:
-            return None
-        return self.__get_way(parent, finish), self.__get_way_weight(parent, finish)
+    # def depth_first_search(self, start, finish):
+    #     # NOTE: это то же самое, что и breadth_first_search() разница лишь в appendleft / append
+    #     deq = deque([start])
+    #     visited = {start, }
+    #     parent = [None for _ in range(self.nodes)]
+    #     while len(deq) > 0:
+    #         current = deq.pop()
+    #         if current == finish:
+    #             break
+    #         # ищем все пути из текущей вершины и приоритетно ставим в очередь, если они не были просмотрены
+    #         for _node, _weight in enumerate(self.get_node(current)):
+    #             if _weight and _node not in visited:
+    #                 visited.add(_node)
+    #                 deq.append(_node)
+    #                 parent[_node] = current
+    #     else:
+    #         return None
+    #     return self.__get_way(parent, finish), self.__get_way_weight(parent, finish)
 
 
 if __name__ == '__main__':

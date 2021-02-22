@@ -6,5 +6,5 @@ if __name__ == '__main__':
     start, finish = 2, 5
     graph = Graph(10, directed=True)
     print(graph)
-    print(graph.breadth_first_search(start, finish))
-    print(graph.depth_first_search(start, finish))
+    print(graph.first_search(start, finish))
+    print(graph.first_search(start, finish, depth_search=True))
