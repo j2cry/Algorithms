@@ -12,10 +12,10 @@ class Node:
     # def get_code(self, data):
     #     if self.data == data:
     #         return ' '
-    #     res = self.left.encode(data) if self.left else None
+    #     res = self.left.get_code(data) if self.left else None
     #     if res:
     #         return '0' + res
-    #     res = self.right.encode(data) if self.right else None
+    #     res = self.right.get_code(data) if self.right else None
     #     if res:
     #         return '1' + res
     #     return ''
@@ -67,7 +67,7 @@ class Tree:
             while not corrected:        # корректируем num
                 corrected = True
                 for pn in passes:
-                    if log2(num / pn) == 2 or num == 2 * pn:
+                    if float.is_integer(log2(num / pn)):
                         num += 2 ** (int(log2(num)) - int(log2(pn)))
                         corrected = False
 
@@ -89,6 +89,9 @@ class Tree:
                 passes.add(num)
         else:
             num = 0
+        z = bin(num)
+        a = bin(num)[3:]
+        b = bin(num)[2:]
         return bin(num)[3:]
 
     def encode(self, source):
@@ -121,16 +124,15 @@ if __name__ == '__main__':
     # print('b', tree.encode_symbol('b'), tree.decode(tree.encode_symbol('b')))
     # print(' ', tree.encode_symbol(' '), tree.decode(tree.encode_symbol(' ')))
     # print('o', tree.encode_symbol('o'), tree.decode(tree.encode_symbol('o')))
-    print('r', tree.encode_symbol('r'), tree.decode(tree.encode_symbol('r')))
+    # print('r', tree.encode_symbol('r'), tree.decode(tree.encode_symbol('r')))
     # print('!', tree.encode_symbol('!'), tree.decode(tree.encode_symbol('!')))
     # print('p', tree.encode_symbol('p'), tree.decode(tree.encode_symbol('p')))
     # print('e', tree.encode_symbol('e'), tree.decode(tree.encode_symbol('e')))
-    print('-' * 50)
-    print(tree.encode_symbol('G'))
+    # print('-' * 50)
+    # print(tree.encode_symbol('G'))
 
     print(tree.encode(src))
+    print(tree.encode('r'))
     print(tree.decode('0011111010100001101110101000111110001001'))
     print(tree.decode('00100001111110001100111011010110001111010100010111010101001100111110111100011001'))
-
-
 
