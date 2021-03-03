@@ -1,0 +1,167 @@
+3.9.0 (tags/v3.9.0:9cf6752, Oct  5 2020, 15:34:40) [MSC v.1927 64 bit (AMD64)] win32
+------------------------- ALGORITHM 1 -------------------------
+Filename: E:\Python projects\Algorithms\lesson_6\task_1.py
+
+Line #    Mem usage    Increment  Occurences   Line Contents
+============================================================
+    15     20.7 MiB     20.7 MiB           1   @profile
+    16                                         def algorithm_1(target):
+    17     20.7 MiB      0.0 MiB           1       primes = [2]
+    18     20.7 MiB      0.0 MiB           1       rng = int(1.5 * target * log(target))
+    19     20.7 MiB      0.0 MiB        1785       for number in range(3, rng, 2):
+    20     20.7 MiB      0.0 MiB      130261           for prime in primes:    # check whether the current number is divisible by all prime numbers before it
+    21     20.7 MiB      0.0 MiB      129762               if number % prime == 0:
+    22     20.7 MiB      0.0 MiB        1286                   break       # divisor found
+    23                                                 else:
+    24     20.7 MiB      0.0 MiB         499               primes.append(number)
+    25     20.7 MiB      0.0 MiB         499               if len(primes) >= target:
+    26     20.7 MiB      0.0 MiB           1                   break
+    27     20.7 MiB      0.0 MiB           1       return f'The {target}-th prime number is {primes[-1]}'
+
+
+The 500-th prime number is 3571
+ALG1 MEMORY> current: 181306, Peak 249243
+------------------------- ALGORITHM 2 -------------------------
+Filename: E:\Python projects\Algorithms\lesson_6\task_1.py
+
+Line #    Mem usage    Increment  Occurences   Line Contents
+============================================================
+    30     20.5 MiB     20.5 MiB           1   @profile
+    31                                         def algorithm_2(target):     # iterating through divisors
+    32     20.5 MiB      0.0 MiB           1       primes = [2]
+    33     20.6 MiB     -0.6 MiB        3569       for number in count(3):
+    34     20.6 MiB   -210.2 MiB      835324           for divisor in range(2, number):
+    35     20.6 MiB   -210.1 MiB      834825               if number % divisor == 0:       # divisor found => number is not prime
+    36     20.6 MiB     -0.5 MiB        3070                   break
+    37                                                 else:
+    38     20.6 MiB     -0.1 MiB         499               primes.append(number)
+    39     20.6 MiB     -0.1 MiB         499               if len(primes) == target:        # break if target number was found
+    40     20.6 MiB      0.0 MiB           1                   break
+    41     20.6 MiB      0.0 MiB           1       return f'The {target}-th prime number is {primes[-1]}'
+
+
+The 500-th prime number is 3571
+ALG2 MEMORY> current: 856, Peak 20643
+------------------------- ALGORITHM 3 -------------------------
+Filename: E:\Python projects\Algorithms\lesson_6\task_1.py
+
+Line #    Mem usage    Increment  Occurences   Line Contents
+============================================================
+    44     20.6 MiB     20.6 MiB           1   @profile
+    45                                         def algorithm_3(target):
+    46     20.6 MiB      0.0 MiB           1       primes = [3]
+    47     20.6 MiB      0.0 MiB        1785       for number in count(3, 2):     # start from 3, cause 2 is already known as prime number
+    48                                                 # check whether the current number is divisible by prime numbers < sqrt(number)
+    49     20.6 MiB      0.0 MiB        1785           sq_num = sqrt(number)
+    50     20.6 MiB      0.0 MiB        1785           is_prime = False
+    51     20.6 MiB      0.0 MiB       10786           for prime in primes:
+    52     20.6 MiB      0.1 MiB       10786               if prime > sq_num:
+    53     20.6 MiB      0.0 MiB         499                   is_prime = True
+    54     20.6 MiB      0.0 MiB         499                   break       # нет смысла искать дальше
+    55     20.6 MiB      0.0 MiB       10287               if number % prime == 0:
+    56     20.6 MiB      0.0 MiB        1286                   break       # divisor found
+    57     20.6 MiB      0.0 MiB        1785           if is_prime:
+    58     20.6 MiB      0.0 MiB         499               primes.append(number)
+    59     20.6 MiB      0.0 MiB         499               if len(primes) >= target:
+    60     20.6 MiB      0.0 MiB           1                   break
+    61     20.6 MiB      0.0 MiB           1       primes = [2, *primes]
+    62     20.6 MiB      0.0 MiB           1       return f'The {target}-th prime number is {primes[-1]}'
+
+
+The 500-th prime number is 3571
+ALG3 MEMORY> current: 1184, Peak 23736
+------------------------- ALGORITHM 3 LIM -------------------------
+Filename: E:\Python projects\Algorithms\lesson_6\task_1.py
+
+Line #    Mem usage    Increment  Occurences   Line Contents
+============================================================
+    65     20.6 MiB     20.6 MiB           1   @profile
+    66                                         def algorithm_3_lim(target):
+    67     20.6 MiB      0.0 MiB           1       primes = [3]
+    68     20.6 MiB      0.0 MiB           1       rng = int(1.5 * target * log(target))
+    69     20.6 MiB      0.0 MiB        1785       for number in range(3, rng, 2):     # start from 3, cause 2 is already known as prime number
+    70                                                 # check whether the current number is divisible by prime numbers < sqrt(number)
+    71     20.6 MiB      0.0 MiB        1785           sq_num = sqrt(number)
+    72     20.6 MiB      0.0 MiB        1785           is_prime = False
+    73     20.6 MiB      0.0 MiB       10786           for prime in primes:
+    74     20.6 MiB      0.0 MiB       10786               if prime > sq_num:
+    75     20.6 MiB      0.0 MiB         499                   is_prime = True
+    76     20.6 MiB      0.0 MiB         499                   break       # нет смысла искать дальше
+    77     20.6 MiB      0.0 MiB       10287               if number % prime == 0:
+    78     20.6 MiB      0.0 MiB        1286                   break       # divisor found
+    79     20.6 MiB      0.0 MiB        1785           if is_prime:
+    80     20.6 MiB      0.0 MiB         499               primes.append(number)
+    81     20.6 MiB      0.0 MiB         499               if len(primes) >= target:
+    82     20.6 MiB      0.0 MiB           1                   break
+    83     20.6 MiB      0.0 MiB           1       primes = [2, *primes]
+    84     20.6 MiB      0.0 MiB           1       return f'The {target}-th prime number is {primes[-1]}'
+
+
+The 500-th prime number is 3571
+ALG3 LIM MEMORY> current: 928, Peak 23556
+--------------------------------------------------
+Number 7 occurs 3 times in the sequence
+Filename: E:\Python projects\Algorithms\lesson_6\task_1.py
+
+Line #    Mem usage    Increment  Occurences   Line Contents
+============================================================
+    89     20.6 MiB     20.6 MiB           1   @profile
+    90                                         def additional_1(source):
+    91     20.6 MiB      0.0 MiB           1       max_counter = 1
+    92     20.6 MiB      0.0 MiB           1       number = 0
+    93     20.6 MiB      0.0 MiB          24       for index in range(len(source) - 1):
+    94     20.6 MiB      0.0 MiB          23           counter = 1
+    95     20.6 MiB      0.0 MiB         299           for compare_index in range(index + 1, len(source)):
+    96     20.6 MiB      0.0 MiB         276               counter += bool(source[index] == source[compare_index])
+    97     20.6 MiB      0.0 MiB          23           if max_counter < counter:
+    98     20.6 MiB      0.0 MiB           2               max_counter = counter
+    99     20.6 MiB      0.0 MiB           2               number = source[index]
+   100     20.6 MiB      0.0 MiB           1       print(f'Number {number} occurs {max_counter} times in the sequence')
+
+
+ADD1 MEMORY> current: 888, Peak 4272
+Number 7 occurs 3 times in the sequence
+Filename: E:\Python projects\Algorithms\lesson_6\task_1.py
+
+Line #    Mem usage    Increment  Occurences   Line Contents
+============================================================
+   104     20.6 MiB     20.6 MiB           1   @profile
+   105                                         def additional_2(source):
+   106     20.6 MiB      0.0 MiB           1       max_counter = 1
+   107     20.6 MiB      0.0 MiB           1       number = 0
+   108     20.6 MiB      0.0 MiB           1       counter = {}
+   109     20.6 MiB      0.0 MiB          25       for num in source:
+   110     20.6 MiB      0.0 MiB          24           if counter.get(num):
+   111     20.6 MiB      0.0 MiB           6               counter[num] += 1
+   112                                                 else:
+   113     20.6 MiB      0.0 MiB          18               counter.update({num: 1})
+   114
+   115     20.6 MiB      0.0 MiB          19       for num, cnt in counter.items():
+   116     20.6 MiB      0.0 MiB          18           if max_counter < cnt:
+   117     20.6 MiB      0.0 MiB           2               max_counter = cnt
+   118     20.6 MiB      0.0 MiB           2               number = num
+   119     20.6 MiB      0.0 MiB           1       print(f'Number {number} occurs {max_counter} times in the sequence')
+
+
+ADD2 MEMORY> current: 880, Peak 4959
+Two smallest values: -80, -19
+Filename: E:\Python projects\Algorithms\lesson_6\task_1.py
+
+Line #    Mem usage    Increment  Occurences   Line Contents
+============================================================
+   123     20.6 MiB     20.6 MiB           1   @profile
+   124                                         def les_3_t_7(source: list):
+   125     20.6 MiB      0.0 MiB           1       first_min, second_min = source[0], source[0]
+   126     20.6 MiB      0.0 MiB          25       for index in range(len(source)):
+   127     20.6 MiB      0.0 MiB          24           if source[index] <= first_min:
+   128     20.6 MiB      0.0 MiB           3               second_min = first_min
+   129     20.6 MiB      0.0 MiB           3               first_min = source[index]
+   130     20.6 MiB      0.0 MiB           3               continue
+   131     20.6 MiB      0.0 MiB          21           if source[index] < second_min:
+   132     20.6 MiB      0.0 MiB           2               second_min = source[index]
+   133     20.6 MiB      0.0 MiB           1       print(f'Two smallest values: {first_min}, {second_min}')
+
+
+L3T7 MEMORY> current: 856, Peak 3999
+
+Process finished with exit code 0
